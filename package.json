@@ -1,0 +1,14 @@
+{
+  "name": "serverAPI",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/mwladyka126/serverAPI.git",
+  "author": "Malgorzata Wladyka <mwladyka126@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "4.17.1"
+  }
+}
