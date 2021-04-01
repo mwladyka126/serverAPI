@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const db = require("./../dataBase");
+const db = require("../dateBase");
 const testimonials = db.testimonials;
 
 router.route("/testimonials").get((req, res) => {
@@ -8,7 +8,9 @@ router.route("/testimonials").get((req, res) => {
 });
 router.route("/testimonials/random").get((req, res) => {
   const id = Math.floor(Math.random() * testimonials.length + 0);
-  res.redirect(`/testimonials/${id}`);
+  const record = testimonials.find((el) => el.id == id);
+  const text = record.text;
+  res.json(text);
 });
 
 router.route("/testimonials/:id").get((req, res) => {
