@@ -10,7 +10,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
-//app.use(express.static(path.join(__dirname, "/routes")));
+app.use(express.static(path.join(__dirname, "/client/public")));
 app.use("/api", testimonialsRoutes); // add testimonials routes to server
 app.use("/api", concertsRoutes);
 app.use("/api", seatsRoutes);
@@ -18,6 +18,6 @@ app.use("/api", seatsRoutes);
 app.use((req, res) => {
   res.status(404).send("404 not found...");
 });
-app.listen(8000, () => {
+app.listen(process.env.PORT || 8000, () => {
   console.log("Server is running on port: 8000");
 });
