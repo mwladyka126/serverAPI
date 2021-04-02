@@ -11,3 +11,7 @@
 # To run the project
 
 `npm start` or `yarn start`
+
+# See the project on heroku
+
+https://evening-depths-87320.herokuapp.com/
