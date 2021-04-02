@@ -10,10 +10,16 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
-app.use(express.static(path.join(__dirname, "/client/public")));
-app.use("/api", testimonialsRoutes); // add testimonials routes to server
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, "/client/build")));
+//add routes
+app.use("/api", testimonialsRoutes);
 app.use("/api", concertsRoutes);
 app.use("/api", seatsRoutes);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/client/build/index.html"));
+});
 
 app.use((req, res) => {
   res.status(404).send("404 not found...");

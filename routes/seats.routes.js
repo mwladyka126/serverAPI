@@ -24,8 +24,15 @@ router.route("/seats").post((req, res) => {
   newRecord.client = client;
   newRecord.email = email;
   newRecord.day = day;
-  seats.push(newRecord);
-  res.json({ message: "OK" });
+  const notAvailable = seats
+    .filter((el) => el.seat == seat)
+    .some((el) => el.day == day);
+  if (!notAvailable) {
+    seats.push(newRecord);
+    res.json({ message: "OK" });
+  } else {
+    res.json({ message: "The slot is already taken..." });
+  }
 });
 
 router.route("/seats/:id").put((req, res) => {
