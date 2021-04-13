@@ -14,9 +14,12 @@ const server = app.listen(process.env.PORT || 8000, () => {
 });
 
 const io = socket(server, { cors: true });
-mongoose.connect("mongodb://localhost:27017/NewWaveDB", {
-  useNewUrlParser: true,
-});
+mongoose.connect(
+  "mongodb+srv://gosiak126:gosiak126@cluster0.w1mbx.mongodb.net/NewWaveDB?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+  }
+);
 const db = mongoose.connection;
 
 db.once("open", () => {
