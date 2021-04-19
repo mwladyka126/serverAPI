@@ -14,10 +14,12 @@ const server = app.listen(process.env.PORT || 8000, () => {
 });
 
 const io = socket(server, { cors: true });
+
 mongoose.connect(
   "mongodb+srv://gosiak126:gosiak126@cluster0.w1mbx.mongodb.net/NewWaveDB?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
+    useUnifiedTopology: true,
   }
 );
 const db = mongoose.connection;
@@ -52,3 +54,4 @@ app.get("*", (req, res) => {
 app.use((req, res) => {
   res.status(404).send("404 not found...");
 });
+module.exports = server;
