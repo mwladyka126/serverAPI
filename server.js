@@ -15,13 +15,15 @@ const server = app.listen(process.env.PORT || 8000, () => {
 
 const io = socket(server, { cors: true });
 
-mongoose.connect(
-  "mongodb+srv://gosiak126:gosiak126@cluster0.w1mbx.mongodb.net/NewWaveDB?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+const dbURI =
+  process.env.NODE_ENV === "production"
+    ? "mongodb+srv://gosiak126:gosiak126@cluster0.w1mbx.mongodb.net/NewWaveDB?retryWrites=true&w=majority"
+    : "mongodb://localhost:27017/NewWaveDB";
+
+mongoose.connect(dbURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 const db = mongoose.connection;
 
 db.once("open", () => {

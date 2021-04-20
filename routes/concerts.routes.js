@@ -5,6 +5,7 @@ const ConcertController = require("../controllers/concerts.controller");
 router.get("/concerts", ConcertController.getAllconcerts);
 router.get("/concerts/random", ConcertController.getRandomConcert);
 router.get("/concerts/:id", ConcertController.getConcertById);
+router.get("/concerts/:id/tickets", ConcertController.getTicketsForTheConcert);
 router.get(
   "/concerts/performer/:performer",
   ConcertController.getConcertByPerformer
