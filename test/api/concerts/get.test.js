@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 const expect = chai.expect;
 const request = chai.request;
 describe("GET /api/concerts", () => {
-  beforeEach(async () => {
+  before(async () => {
     const testConOne = new Concert({
       _id: "5d9f1140f10a81216cfd4408",
       day: 1,
@@ -30,7 +30,7 @@ describe("GET /api/concerts", () => {
     await testConTwo.save();
   });
 
-  afterEach(async () => {
+  after(async () => {
     await Concert.deleteMany();
   });
   it("/should return all concerts", async () => {
@@ -40,17 +40,40 @@ describe("GET /api/concerts", () => {
     expect(res.body.length).to.be.equal(2);
   });
 
-  it("/:id should return one Concert by :id ", async () => {
+  it("/:id should return one Concert with :id ", async () => {
     const res = await request(server).get(
-      "/api/Concerts/5d9f1140f10a81216cfd4408"
+      "/api/concerts/5d9f1140f10a81216cfd4408"
     );
     expect(res.status).to.be.equal(200);
     expect(res.body).to.be.an("object");
     expect(res.body).to.not.be.null;
   });
 
-  it("/random should return one random Concert", async () => {
-    const res = await request(server).get("/api/Concerts/random");
+  it("/:day should return all concerts on the day ", async () => {
+    const res = await request(server).get("/api/concerts/day/1");
+    expect(res.status).to.be.equal(200);
+    expect(res.body).to.be.an("array");
+    expect(res.body).to.not.be.null;
+  });
+  it("/:performer should return all concert of the performer ", async () => {
+    const res = await request(server).get(
+      "/api/concerts/performer/Jennifer%20Dias"
+    );
+    expect(res.status).to.be.equal(200);
+    expect(res.body).to.be.an("array");
+    expect(res.body).to.not.be.null;
+  });
+
+  it("/:price should return all concert in price scope ", async () => {
+    const res = await request(server).get("/api/concerts/price/24/30");
+    expect(res.status).to.be.equal(200);
+    expect(res.body).to.be.an("array");
+    expect(res.body).to.not.be.null;
+    expect(res.body.length).to.be.equal(1);
+  });
+
+  it("/random should return one random concert", async () => {
+    const res = await request(server).get("/api/concerts/random");
     expect(res.status).to.be.equal(200);
     expect(res.body).to.be.an("object");
     expect(res.body).to.not.be.null;

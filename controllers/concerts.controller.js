@@ -30,7 +30,9 @@ exports.getConcertById = async (req, res) => {
 };
 exports.getConcertByPerformer = async (req, res) => {
   try {
-    const concerts = await Concert.find({ performer: req.params.performer });
+    const concerts = await Concert.find({
+      performer: req.params.performer,
+    });
 
     if (!concerts) res.status(404).json({ message: "Not found" });
     else res.json(concerts);
@@ -72,7 +74,7 @@ exports.getConcertByDay = async (req, res) => {
     res.status(500).json({ message: err });
   }
 };
-exports.post = async (req, res) => {
+exports.postConcert = async (req, res) => {
   try {
     const { performer, genre, price, day, image } = req.body;
     const newConcert = new Concert({
@@ -89,7 +91,7 @@ exports.post = async (req, res) => {
   }
 };
 
-exports.putId = async (req, res) => {
+exports.putConcertById = async (req, res) => {
   const { performer, genre, price, day, image } = req.body;
   try {
     const concert = await Concert.findById(req.params.id);
@@ -113,7 +115,7 @@ exports.putId = async (req, res) => {
   }
 };
 
-exports.deleteId = async (req, res) => {
+exports.deleteConcertById = async (req, res) => {
   try {
     const concert = await Concert.findById(req.params.id);
     if (concert) {

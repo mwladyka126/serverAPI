@@ -16,8 +16,8 @@ router.get(
 );
 router.get("/concerts/day/:day", ConcertController.getConcertByDay);
 
-router.post("/concerts", ConcertController.post);
-router.put("/concerts/:id", ConcertController.putId);
-router.delete("/concerts/:id", ConcertController.deleteId);
+router.post("/concerts", ConcertController.postConcert);
+router.put("/concerts/:id", ConcertController.putConcertById);
+router.delete("/concerts/:id", ConcertController.deleteConcertById);
 
 module.exports = router;
