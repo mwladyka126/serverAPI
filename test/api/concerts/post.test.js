@@ -27,6 +27,6 @@ describe("POST /api/concerts", () => {
   });
 
   after(async () => {
-    await Concert.deleteMany();
+    await Concert.deleteMany({ image: "test.jpg" });
   });
 });

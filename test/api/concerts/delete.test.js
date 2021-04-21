@@ -22,7 +22,7 @@ describe("DELETE /api/Concerts", () => {
   });
 
   after(async () => {
-    await Concert.deleteMany();
+    await Concert.deleteMany({ image: "test.jpg" });
   });
 
   it("/:id should delete chosen document and return success", async () => {

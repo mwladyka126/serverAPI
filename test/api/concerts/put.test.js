@@ -21,7 +21,7 @@ describe("PUT /api/concerts", () => {
   });
 
   after(async () => {
-    await Concert.deleteMany();
+    await Concert.deleteMany({ image: "test.jpg" });
   });
 
   it("/:id should update chosen document and return success", async () => {

@@ -31,7 +31,7 @@ describe("GET /api/concerts", () => {
   });
 
   after(async () => {
-    await Concert.deleteMany();
+    await Concert.deleteMany({ image: "test.jpg" });
   });
   it("/should return all concerts", async () => {
     const res = await request(server).get("/api/concerts");
