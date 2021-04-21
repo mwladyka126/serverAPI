@@ -2,6 +2,7 @@ const chai = require("chai");
 const chaiHttp = require("chai-http");
 const server = require("../../../server");
 const Concert = require("../../../models/concert.model");
+const Seat = require("../../../models/seats.model");
 
 chai.use(chaiHttp);
 
@@ -28,11 +29,22 @@ describe("GET /api/concerts", () => {
       image: "test.jpg",
     });
     await testConTwo.save();
+
+    const testSeatOne = new Seat({
+      _id: "11111159f81ce8d1ef2bee48",
+      day: 1,
+      client: "Yolanda Lits",
+      seat: "38",
+      email: "test@wp.pl",
+    });
+    await testSeatOne.save();
   });
 
   after(async () => {
     await Concert.deleteMany({ image: "test.jpg" });
+    await Seat.deleteOne({ email: "test@wp.pl" });
   });
+
   it("/should return all concerts", async () => {
     const res = await request(server).get("/api/concerts");
     expect(res.status).to.be.equal(200);
@@ -46,6 +58,17 @@ describe("GET /api/concerts", () => {
     );
     expect(res.status).to.be.equal(200);
     expect(res.body).to.be.an("object");
+    expect(res.body).to.not.be.null;
+  });
+
+  it("/:id should return one Concert with :id and free tickets", async () => {
+    const res = await request(server).get(
+      "/api/concerts/5d9f1140f10a81216cfd4408/tickets"
+    );
+    const soldTickets = await Seat.find({ day: res.body.concert.day });
+    const freeTickets = 50 - soldTickets.length;
+    expect(res.status).to.be.equal(200);
+    expect(res.body).to.be.an("object").to.have.property("freeTickets");
     expect(res.body).to.not.be.null;
   });
 
