@@ -3,6 +3,7 @@ const cors = require("cors");
 const path = require("path");
 const socket = require("socket.io");
 const mongoose = require("mongoose");
+const helmet = require("helmet");
 // import routes
 const testimonialsRoutes = require("./routes/testimonials.routes");
 const concertsRoutes = require("./routes/concerts.routes");
@@ -19,7 +20,6 @@ const dbURI =
   process.env.NODE_ENV === "production"
     ? "mongodb+srv://${process.env.userAppName}:${process.env.NewWaveApp}@cluster0.w1mbx.mongodb.net/NewWaveDB?retryWrites=true&w=majority"
     : "mongodb://localhost:27017/NewWaveDB";
-console.log(process.env.NewWaveApp);
 
 mongoose.connect(dbURI, {
   useNewUrlParser: true,
@@ -43,6 +43,7 @@ app.use((req, res, next) => {
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
+app.use(helmet());
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, "/client/build")));
 //add routes
