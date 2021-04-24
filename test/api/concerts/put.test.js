@@ -18,10 +18,11 @@ describe("PUT /api/concerts", () => {
       price: "28",
       image: "test.jpg",
     });
+    await testConOne.save();
   });
 
   after(async () => {
-    await Concert.deleteMany({ image: "test.jpg" });
+    await Concert.deleteMany();
   });
 
   it("/:id should update chosen document and return success", async () => {

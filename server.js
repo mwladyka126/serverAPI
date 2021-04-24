@@ -16,12 +16,18 @@ const server = app.listen(process.env.PORT || 8000, () => {
 
 const io = socket(server, { cors: true });
 
-const dbURI =
-  process.env.NODE_ENV === "production"
-    ? "mongodb+srv://${process.env.userAppName}:${process.env.NewWaveApp}@cluster0.w1mbx.mongodb.net/NewWaveDB?retryWrites=true&w=majority"
-    : "mongodb://localhost:27017/NewWaveDB";
+const determineDbUri = (envType) => {
+  switch (envType) {
+    case "production":
+      return "mongodb+srv://${process.env.userAppName}:${process.env.NewWaveApp}@cluster0.w1mbx.mongodb.net/NewWaveDB?retryWrites=true&w=majority";
+    case "test":
+      return "mongodb://localhost:27017/NewWaveDBTest";
+    default:
+      return "mongodb://localhost:27017/NewWaveDB";
+  }
+};
 
-mongoose.connect(dbURI, {
+mongoose.connect(determineDbUri(process.env.NODE_ENV), {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

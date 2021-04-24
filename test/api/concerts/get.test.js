@@ -41,8 +41,8 @@ describe("GET /api/concerts", () => {
   });
 
   after(async () => {
-    await Concert.deleteMany({ image: "test.jpg" });
-    await Seat.deleteOne({ email: "test@wp.pl" });
+    await Concert.deleteMany();
+    await Seat.deleteMany();
   });
 
   it("/should return all concerts", async () => {
@@ -68,7 +68,10 @@ describe("GET /api/concerts", () => {
     const soldTickets = await Seat.find({ day: res.body.concert.day });
     const freeTickets = 50 - soldTickets.length;
     expect(res.status).to.be.equal(200);
-    expect(res.body).to.be.an("object").to.have.property("freeTickets");
+    expect(res.body)
+      .to.be.an("object")
+      .to.have.property("freeTickets")
+      .to.be.equal(freeTickets);
     expect(res.body).to.not.be.null;
   });
 
