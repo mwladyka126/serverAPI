@@ -42,9 +42,14 @@ exports.getTicketsForTheConcert = async (req, res) => {
   }
 };
 exports.getConcertByPerformer = async (req, res) => {
+  const [name, surname] = req.params.performer.split(" ");
+  const newName = name.charAt(0).toUpperCase() + name.slice(1);
+  const newSurname = surname.charAt(0).toUpperCase() + surname.slice(1);
+  performerName = newName + " " + newSurname;
+
   try {
     const concerts = await Concert.find({
-      performer: req.params.performer,
+      performer: performerName,
     });
 
     if (!concerts) res.status(404).json({ message: "Not found" });
@@ -54,8 +59,10 @@ exports.getConcertByPerformer = async (req, res) => {
   }
 };
 exports.getConcertByGenre = async (req, res) => {
+  const genreName =
+    req.params.genre.charAt(0).toUpperCase() + req.params.genre.slice(1);
   try {
-    const concerts = await Concert.find({ genre: req.params.genre });
+    const concerts = await Concert.find({ genre: genreName });
 
     if (!concerts) res.status(404).json({ message: "Not found" });
     else res.json(concerts);
