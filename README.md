@@ -1,4 +1,4 @@
-# serverAPI
+# Music Festival App with Booking System
 
 # Project description
 
