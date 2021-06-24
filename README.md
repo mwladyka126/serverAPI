@@ -2,7 +2,7 @@
 
 # Project description
 
-This is the full-stuck application for the music festival and its booking system - the app shows only free tickets and updates tickets availability once new ticket is booked
+This is the full-stack application for the music festival and its booking system - the app shows only free tickets and updates tickets availability once new ticket is booked
 
 # Backend:
 
